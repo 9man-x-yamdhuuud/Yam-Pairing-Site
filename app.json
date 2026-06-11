@@ -1,9 +1,9 @@
 
 {
-    "name": "arslan-md",
+    "name": "9man-x-yamdhud",
     "description": "A whatsApp bot based on Baileysjs linrary (Ts+Js) with Multi Device support",
-    "repository": "https://github.com/Arslan-MD/Arslan-Pairing-Site",
-    "logo": "https://files.catbox.moe/a6chsf.jpg",
+    "repository": "https://github.com/9man-x-yamdhuuud",
+    "logo": "https://files.catbox.moe/s0x3iu.jpg",
     "keywords": ["nodejs", "bot", "whatsapp bot", "whatsapp automation", "multi device"],
     "buildpacks": [
       {
