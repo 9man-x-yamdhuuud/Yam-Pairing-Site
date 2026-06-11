@@ -12,7 +12,8 @@
     "body-parser": "^1.20.2",
     "express": "^4.19.2",
     "pino": "^8.17.2",
-    "qrcode": "^1.5.3"
+    "qrcode": "^1.5.3",
+    "pastebin-js": "^1.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
