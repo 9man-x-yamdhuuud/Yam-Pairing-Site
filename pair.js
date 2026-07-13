@@ -1,10 +1,6 @@
-// routes/pair.js
-const PastebinAPI = require('pastebin-js');
-const pastebin = new PastebinAPI('EMWTMkQAVfJa9kM-MRUrxd5Oku1U7pgL');
-const { makeid } = require('../id');   // ध्यान दें: ../id
+// yamdhud.js – Single file solution
 const express = require('express');
 const fs = require('fs');
-let router = express.Router();
 const pino = require('pino');
 const {
     default: Mbuvi_Tech,
@@ -14,21 +10,38 @@ const {
     Browsers
 } = require('@whiskeysockets/baileys');
 
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// ------------------------------------------------------
+// यहाँ makeid फंक्शन (पहले id.js में था)
+function makeid() {
+    return Math.random().toString(36).substring(2, 10);
+}
+
+// ------------------------------------------------------
+// टेम्प फ़ोल्डर हटाने का फंक्शन
 function removeFile(FilePath) {
     if (!fs.existsSync(FilePath)) return false;
     fs.rmSync(FilePath, { recursive: true, force: true });
 }
 
-router.get('/', async (req, res) => {
+// ------------------------------------------------------
+// पेयरिंग रूट
+app.get('/pair', async (req, res) => {
     const id = makeid();
     let num = req.query.number;
 
-    // अगर नंबर नहीं आया तो एरर भेजें
     if (!num) {
         return res.status(400).send({ error: 'number query parameter is required' });
     }
 
     async function Mbuvi_MD_PAIR_CODE() {
+        // सुनिश्चित करें कि temp फ़ोल्डर मौजूद है
+        if (!fs.existsSync('./temp')) {
+            fs.mkdirSync('./temp');
+        }
+
         const { state, saveCreds } = await useMultiFileAuthState('./temp/' + id);
         try {
             let Pair_Code_By_Mbuvi_Tech = Mbuvi_Tech({
@@ -58,15 +71,15 @@ router.get('/', async (req, res) => {
                         await delay(5000);
 
                         // --- पहला मैसेज (सेशन base64) ---
-                        let data = fs.readFileSync(__dirname + `/../temp/${id}/creds.json`);
-                        let b64data = Buffer.from(data).toString('base64');
+                        const data = fs.readFileSync(`./temp/${id}/creds.json`);
+                        const b64data = Buffer.from(data).toString('base64');
                         await Pair_Code_By_Mbuvi_Tech.sendMessage(
                             Pair_Code_By_Mbuvi_Tech.user.id,
                             { text: 'ARSLAN-MD~' + b64data }
                         );
 
                         // --- दूसरा मैसेज (नोटिफिकेशन) ---
-                        let Mbuvi_MD_TEXT = `
+                        const Mbuvi_MD_TEXT = `
         
 ╔════════════════════◇
 ║『 SESSION CONNECTED』
@@ -99,7 +112,7 @@ router.get('/', async (req, res) => {
 Don't Forget To Give Star⭐ To My Repo
 ______________________________`;
 
-                        // अब सही वेरिएबल (Mbuvi_MD_TEXT) भेजें
+                        // मैसेज भेजें (अब Toxic_MD_TEXT नहीं, बल्कि Mbuvi_MD_TEXT)
                         await Pair_Code_By_Mbuvi_Tech.sendMessage(
                             Pair_Code_By_Mbuvi_Tech.user.id,
                             { text: Mbuvi_MD_TEXT }
@@ -130,4 +143,14 @@ ______________________________`;
     return await Mbuvi_MD_PAIR_CODE();
 });
 
-module.exports = router;
+// ------------------------------------------------------
+// होम पेज
+app.get('/', (req, res) => {
+    res.send('✅ Pairing server is running. Use /pair?number=91xxxxxxxxxx');
+});
+
+// ------------------------------------------------------
+// सर्वर चलाएँ
+app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+});
