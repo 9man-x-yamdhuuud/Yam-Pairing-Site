@@ -1,34 +1,15 @@
 {
-  "name": "whatsapp-pairing-server",
+  "name": "yamdhud-pair",
   "version": "1.0.0",
-  "description": "WhatsApp pairing and QR code server using Baileys and Express",
+  "description": "WhatsApp Pairing Code Server",
   "main": "yamdhud.js",
   "scripts": {
-    "start": "node yamdhud.js",
-    "dev": "nodemon yamdhud.js"
+    "start": "node yamdhud.js"
   },
   "dependencies": {
     "@whiskeysockets/baileys": "^6.7.0",
-    "body-parser": "^1.20.2",
-    "express": "^4.19.2",
-    "pino": "^8.17.2",
-    "qrcode": "^1.5.3",
+    "express": "^4.18.2",
+    "pino": "^8.14.1",
     "pastebin-js": "^1.0.0"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.0"
-  },
-  "keywords": [
-    "whatsapp",
-    "baileys",
-    "pairing",
-    "qrcode",
-    "express"
-  ],
-  "author": "Aryan5738 / 9man-x-yamdhuuud",
-  "license": "ISC",
-  "type": "commonjs",
-  "engines": {
-    "node": ">=18.0.0"
   }
 }
